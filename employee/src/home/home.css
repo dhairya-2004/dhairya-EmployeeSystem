@@ -1,0 +1,279 @@
+
+.navbar {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar h1 {
+  margin: 0;
+}
+
+.btn-logout{
+  width: 8%;
+}
+
+
+.main-container {
+  padding-top: 5rem;
+  background-color: #fcd221;
+}
+
+
+.add-employee-container {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap:1rem;
+  margin: 0rem 5rem;
+}
+
+
+.add-snf {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0rem 5rem;
+}
+
+
+.add-employee {
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 11rem;
+}
+
+.add-employee:hover {
+  background-color: #218838;
+}
+
+
+.employee-container {
+  height: 100vh;
+  overflow-x: auto;
+
+}
+
+
+.employee-background {
+  background-color: white;
+  margin: 0rem 5rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  
+}
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+thead,tr,th{
+  position: sticky !important;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  height: 5rem;
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+td {
+  height: 5rem;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+
+tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.action-buttons a {
+  
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  text-decoration: none; 
+}
+
+
+.action-buttons button {
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  color: black;
+  /* background-color: ; */
+}
+
+.action-buttons a.edit {
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.action-buttons a.edit:hover {
+  background-color: #0056b3;
+}
+
+
+/* .action-buttons button.edit {
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.action-buttons button.edit:hover {
+  background-color: #0056b3;
+} */
+
+
+.action-buttons button.delete {
+  background-color: #dc3545;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.action-buttons button.delete:hover {
+  background-color: #c82333;
+}
+
+
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-icon {
+  width: 20px; 
+  height: 20px; 
+  position: absolute;
+  right: 10px; 
+  cursor: pointer;
+}
+
+.vertical-ellipsis{
+  width: '200px'; 
+  height: '60px';
+  overflow: 'hidden';
+  textOverflow: 'ellipsis';
+  whiteSpace: 'nowrap';
+  border: '1px solid #ccc';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+
+.download{
+    background-color: white;
+    /* background-color: #28a745; */
+  color: white;
+  border-radius: 5px;
+  border: none;
+  padding: 0.7rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 2rem;
+
+}
+
+.download-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter {
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter:hover {
+  background-color: #e1e1e1;
+}
+
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter {
+    margin-bottom: 8px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .employee-background {
+    margin: 0rem 2rem;
+  }
+
+  td,
+  th {
+    font-size: 14px;
+  }
+
+  .add-snf,
+  .add-employee-container {
+    margin: 0rem 2rem;
+  }
+}
+
+
