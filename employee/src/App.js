@@ -18,7 +18,7 @@ function App() {
         <Route path='/salary' element={<Salary/>}/>
         <Route path='/salaryhome' element={<SalaryHome/>}/>
         <Route path="edit-employee/:id" element={<Add/>} />
-        <Route path="edit-employeeSalary/:ids" element={<Salary/>} />
+        <Route path="edit-employeeSalary/:id" element={<Salary/>} />
       </Routes>
     </Router>
   );
