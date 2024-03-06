@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import download from "../assets/download.png";
 import { PDFDownloadLink, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
 import "./home.css";
 import search from "../assets/search.png";
+import SimCardDownloadOutlinedIcon from '@mui/icons-material/SimCardDownloadOutlined';
 
 
 import {
@@ -16,6 +17,7 @@ import EmployeeFormModal from "../add/EmployeeFormModal";
 const EmployeeTable = () => {
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllEmployees();
@@ -51,9 +53,10 @@ const EmployeeTable = () => {
       });
   };
 
-  // const handleDropdownOption = (option, employee) => {
-  //   console.log(`Selected option "${option}" for employee ${employee.id}`);
-  // };
+  const handleLogout = () => {
+    
+    navigate("/login")
+  };
 
   const styles = StyleSheet.create({
     page: {
@@ -67,6 +70,8 @@ const EmployeeTable = () => {
     },
   });
 
+  
+
   const MyDocument = () => (
     <Document>
       {employees.map((employee) => (
@@ -75,6 +80,13 @@ const EmployeeTable = () => {
             <Text>{`ID: ${employee.id}`}</Text>
             <Text>{`First Name: ${employee.firstName}`}</Text>
             <Text>{`Last Name: ${employee.lastName}`}</Text>
+            <Text>{`Email Id: ${employee.emailId}`}</Text>
+            <Text>{`Salary: ${employee.salary}`}</Text>
+            <Text>{`Date: ${employee.date}`}</Text>
+            <Text>{`Age: ${employee.age}`}</Text>
+            <Text>{`Contact No: ${employee.contactNo}`}</Text>
+            <Text>{`City: ${employee.city}`}</Text>
+            
             {/* Add other details as needed */}
           </View>
         </Page>
@@ -86,7 +98,7 @@ const EmployeeTable = () => {
     <div>
       <div className="navbar">
         <h1>Employee Management System</h1>
-        <button className="btn-logout">Logout</button>
+        <button className="btn-logout" onClick={handleLogout}>Logout</button>
       </div>
 
       <div className="main-container">
@@ -155,7 +167,8 @@ const EmployeeTable = () => {
                           loading ? (
                             "Loading document..."
                           ) : (
-                            <img src={download} alt="Download PDF" />
+                            // <img src={download} alt="Download PDF" />
+                           <SimCardDownloadOutlinedIcon/>
                           )
                         }
                       </PDFDownloadLink>
