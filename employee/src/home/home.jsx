@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import download from "../assets/download.png";
-import { PDFDownloadLink, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
+import {
+  PDFDownloadLink,
+  Document,
+  Page,
+  View,
+  Text,
+  StyleSheet,
+} from "@react-pdf/renderer";
 import "./home.css";
 import search from "../assets/search.png";
-import SimCardDownloadOutlinedIcon from '@mui/icons-material/SimCardDownloadOutlined';
-
+import SimCardDownloadOutlinedIcon from "@mui/icons-material/SimCardDownloadOutlined";
 
 import {
   listEmployees,
@@ -17,21 +23,109 @@ import EmployeeFormModal from "../add/EmployeeFormModal";
 const EmployeeTable = () => {
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterSalary, setFilterSalary] = useState("");
+  const [filterAge, setFilterAge] = useState("");
+  // const [filterBirthday, setFilterBirthday] = useState("");
+  const [filterId, setFilterId] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     getAllEmployees();
-  }, []);
+  }, [searchQuery, filterSalary, filterAge, filterId]);
+
+  // const getAllEmployees = () => {
+  //   listEmployees()
+  //     .then((response) => {
+  //       const filteredEmployees = response.data.filter((employee) =>
+  //         Object.values(employee).some(
+  //           (value) =>
+  //             value &&
+  //             value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+  //         )
+  //       );
+  //       setEmployees(filteredEmployees);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  // const getAllEmployees = () => {
+  //   listEmployees()
+  //     .then((response) => {
+  //       const filteredEmployees = response.data
+  //         .filter((employee) =>
+  //           Object.values(employee).some(
+  //             (value) =>
+  //               value &&
+  //               value
+  //                 .toString()
+  //                 .toLowerCase()
+  //                 .includes(searchQuery.toLowerCase())
+  //           )
+  //         )
+  //         .filter((employee) =>
+  //           filterSalary ? employee.salary >= filterSalary : true
+  //         )
+  //         .filter((employee) => (filterAge ? employee.age >= filterAge : true))
+  //         .filter((employee) =>
+  //           filterBirthday ? employee.date.includes(filterBirthday) : true
+  //         )
+  //         .filter((employee) => (filterId ? employee.id == filterId : true));
+
+  //       setEmployees(filteredEmployees);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   const getAllEmployees = () => {
     listEmployees()
       .then((response) => {
-        setEmployees(response.data);
-        console.log(response.data);
+        const filteredEmployees = response.data
+          .filter((employee) =>
+            Object.values(employee).some(
+              (value) =>
+                value &&
+                value
+                  .toString()
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase())
+            )
+          )
+          .filter((employee) =>
+            filterSalary ? employee.salary >= filterSalary : true
+          )
+          .filter((employee) => (filterAge ? employee.age == filterAge : true))
+          // .filter((employee) =>
+          //   filterBirthday ? employee.date.includes(filterBirthday) : true
+          // )
+          .filter((employee) => (filterId ? employee.id == filterId : true));
+  
+        setEmployees(filteredEmployees);
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+  
+
+  const handleFilterSalary = (event) => {
+    setFilterSalary(event.target.value);
+  };
+
+  const handleFilterAge = (event) => {
+    setFilterAge(event.target.value);
+  };
+
+  // const handleFilterBirthday = (event) => {
+  //   setFilterBirthday(event.target.value);
+  // };
+
+  const handleFilterId = (event) => {
+    setFilterId(event.target.value);
   };
 
   const handleAddEmployee = () => {
@@ -54,8 +148,11 @@ const EmployeeTable = () => {
   };
 
   const handleLogout = () => {
-    
-    navigate("/login")
+    navigate("/login");
+  };
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
   };
 
   const styles = StyleSheet.create({
@@ -70,8 +167,6 @@ const EmployeeTable = () => {
     },
   });
 
-  
-
   const MyDocument = () => (
     <Document>
       {employees.map((employee) => (
@@ -82,11 +177,11 @@ const EmployeeTable = () => {
             <Text>{`Last Name: ${employee.lastName}`}</Text>
             <Text>{`Email Id: ${employee.emailId}`}</Text>
             <Text>{`Salary: ${employee.salary}`}</Text>
-            <Text>{`Date: ${employee.date}`}</Text>
+            <Text>{`Birth Date: ${employee.date}`}</Text>
             <Text>{`Age: ${employee.age}`}</Text>
             <Text>{`Contact No: ${employee.contactNo}`}</Text>
             <Text>{`City: ${employee.city}`}</Text>
-            
+
             {/* Add other details as needed */}
           </View>
         </Page>
@@ -98,7 +193,9 @@ const EmployeeTable = () => {
     <div>
       <div className="navbar">
         <h1>Employee Management System</h1>
-        <button className="btn-logout" onClick={handleLogout}>Logout</button>
+        <button className="btn-logout" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
 
       <div className="main-container">
@@ -108,9 +205,52 @@ const EmployeeTable = () => {
           </button>
         </div>
         <div className="add-snf">
-          <div className="filters">Filter 1 | Filter 2 | Filter 3</div>
+          {/* <div className="filters">Filter 1 | Filter 2 | Filter 3</div> */}
+          <div className="filters">
+            <div>
+              Salary:
+              <input
+                type="number"
+                placeholder="Filter by salary"
+                onChange={handleFilterSalary}
+                value={filterSalary}
+              />
+            </div>
+            <div>
+              Age:
+              <input
+                type="number"
+                placeholder="Filter by age"
+                onChange={handleFilterAge}
+                value={filterAge}
+              />
+            </div>
+            <div>
+              {/* Birthday:
+              <input
+                type="text"
+                placeholder="Filter by birthday"
+                onChange={handleFilterBirthday}
+                value={filterBirthday}
+              /> */}
+            </div>
+            <div>
+              Id:
+              <input
+                type="number"
+                placeholder="Filter by id"
+                onChange={handleFilterId}
+                value={filterId}
+              />
+            </div>
+          </div>
           <div className="search-bar">
-            <input type="text" placeholder="Search..." />
+            <input
+              type="text"
+              placeholder="Search..."
+              onChange={handleSearch}
+              value={searchQuery}
+            />
             <img src={search} alt="" className="search-icon" />
           </div>
         </div>
@@ -124,7 +264,7 @@ const EmployeeTable = () => {
                   <th>Last Name</th>
                   <th>Email</th>
                   <th>Salary</th>
-                  <th>Date</th>
+                  <th>Birth Date</th>
                   <th>Contact No</th>
                   <th>Age</th>
                   <th>City</th>
@@ -168,7 +308,7 @@ const EmployeeTable = () => {
                             "Loading document..."
                           ) : (
                             // <img src={download} alt="Download PDF" />
-                           <SimCardDownloadOutlinedIcon/>
+                            <SimCardDownloadOutlinedIcon />
                           )
                         }
                       </PDFDownloadLink>
