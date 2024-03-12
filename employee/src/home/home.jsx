@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import download from "../assets/download.png";
+// import FilterListTwoToneIcon from '@mui/icons-material/FilterListTwoTone';
+import FilterListTwoToneIcon from '@mui/icons-material/FilterListTwoTone';
 import {
   PDFDownloadLink,
   Document,
@@ -13,10 +14,10 @@ import "./home.css";
 import search from "../assets/search.png";
 import SimCardDownloadOutlinedIcon from "@mui/icons-material/SimCardDownloadOutlined";
 
+
 import {
   listEmployees,
   deleteEmployee,
-  updateEmployee,
 } from "../services/EmployeeService";
 import EmployeeFormModal from "../add/EmployeeFormModal";
 
@@ -28,28 +29,13 @@ const EmployeeTable = () => {
   const [filterAge, setFilterAge] = useState("");
   // const [filterBirthday, setFilterBirthday] = useState("");
   const [filterId, setFilterId] = useState("");
+  const [showFilterMenu, setShowFilterMenu] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     getAllEmployees();
   }, [searchQuery, filterSalary, filterAge, filterId]);
 
-  // const getAllEmployees = () => {
-  //   listEmployees()
-  //     .then((response) => {
-  //       const filteredEmployees = response.data.filter((employee) =>
-  //         Object.values(employee).some(
-  //           (value) =>
-  //             value &&
-  //             value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-  //         )
-  //       );
-  //       setEmployees(filteredEmployees);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
   // const getAllEmployees = () => {
   //   listEmployees()
@@ -109,6 +95,24 @@ const EmployeeTable = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleToggleFilterMenu = () => {
+    setShowFilterMenu(!showFilterMenu);
+  };
+
+  const handleApplyFilters = () => {
+    setShowFilterMenu(false);
+    getAllEmployees();
+  };
+
+  const handleClearFilters = () => {
+    setFilterSalary("");
+    setFilterAge("");
+    setFilterId("");
+    // ... (clear other filters if needed)
+    setShowFilterMenu(false);
+    getAllEmployees();
   };
   
 
@@ -206,7 +210,9 @@ const EmployeeTable = () => {
         </div>
         <div className="add-snf">
           {/* <div className="filters">Filter 1 | Filter 2 | Filter 3</div> */}
-          <div className="filters">
+          {/* <FilterListTwoToneIcon /> */}
+          
+          {/* <div className="filters">
             <div>
               Salary:
               <input
@@ -226,13 +232,6 @@ const EmployeeTable = () => {
               />
             </div>
             <div>
-              {/* Birthday:
-              <input
-                type="text"
-                placeholder="Filter by birthday"
-                onChange={handleFilterBirthday}
-                value={filterBirthday}
-              /> */}
             </div>
             <div>
               Id:
@@ -243,7 +242,41 @@ const EmployeeTable = () => {
                 value={filterId}
               />
             </div>
+          </div> */}
+           <FilterListTwoToneIcon onClick={handleToggleFilterMenu} />
+        {showFilterMenu && (
+          <div className="filters-dropdown">
+            <div>
+              Salary:
+              <input
+                type="number"
+                placeholder="Filter by salary"
+                onChange={handleFilterSalary}
+                value={filterSalary}
+              />
+            </div>
+            <div>
+              Age:
+              <input
+                type="number"
+                placeholder="Filter by age"
+                onChange={handleFilterAge}
+                value={filterAge}
+              />
+            </div>
+            <div>
+              Id:
+              <input
+                type="number"
+                placeholder="Filter by id"
+                onChange={handleFilterId}
+                value={filterId}
+              />
+            </div>
+            <button className="apply-filter" onClick={handleApplyFilters}>Apply Filters</button>
+            <button className="clear-filter" onClick={handleClearFilters}>Clear Filters</button>
           </div>
+        )}
           <div className="search-bar">
             <input
               type="text"
