@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import FilterListTwoToneIcon from '@mui/icons-material/FilterListTwoTone';
+import salaryHome from "../salaryHome/salaryHome"
 import FilterListTwoToneIcon from '@mui/icons-material/FilterListTwoTone';
 import {
   PDFDownloadLink,
@@ -30,6 +31,8 @@ const EmployeeTable = () => {
   // const [filterBirthday, setFilterBirthday] = useState("");
   const [filterId, setFilterId] = useState("");
   const [showFilterMenu, setShowFilterMenu] = useState(false);
+  const [showSalaryHome, setShowSalaryHome] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -114,6 +117,10 @@ const EmployeeTable = () => {
     setShowFilterMenu(false);
     getAllEmployees();
   };
+  const toggleSalaryHome = () => {
+    setShowSalaryHome(!showSalaryHome);
+  };
+  
   
 
   const handleFilterSalary = (event) => {
@@ -346,7 +353,7 @@ const EmployeeTable = () => {
                         }
                       </PDFDownloadLink>
                       <div className="vertical-ellipsis">
-                        <button className="ellipsis-btn">&#8942;</button>
+                        <button className="ellipsis-btn" onClick={toggleSalaryHome}>&#8942;</button>
                       </div>
                       {/* <div className="dropdown">
                         
@@ -376,6 +383,7 @@ const EmployeeTable = () => {
         </div>
       </div>
       {showModal && <EmployeeFormModal onClose={handleCloseModal} />}
+      {showSalaryHome && <salaryHome />}
     </div>
   );
 };
