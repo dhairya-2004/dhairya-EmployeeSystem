@@ -11,7 +11,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
+        <Route index element={<Login />} />
         <Route path='/home' element={<Home/>}/>
         <Route path='/add' element={<Add/>}/>
         <Route path='/list' element={<ListEmployeeComponent/>}/>
